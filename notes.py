@@ -6,10 +6,11 @@ def init_menu():
 
     menu = {1: 'save notes',
             2: 'show notes',
-            3: 'add note',
-            4: 'change note',
-            5: 'delete note',
-            6: 'exit'}
+            3: 'choose by date',
+            4: 'add note',
+            5: 'change note',
+            6: 'delete note',
+            7: 'exit'}
 
     print('\n'.join("{}: {}".format(k, v) for k, v in menu.items()))
 
@@ -21,12 +22,14 @@ def init_menu():
     elif n == 2:
         read_file(path)
     elif n == 3:
-        add_into_file(path)
+        choose_by_date(path)
     elif n == 4:
-        change_notes_file(path)
+        add_into_file(path)
     elif n == 5:
-        delete_notes_file(path)
+        change_notes_file(path)
     elif n == 6:
+        delete_notes_file(path)
+    elif n == 7:
         quit()
 
 def read_file(path):
@@ -34,6 +37,22 @@ def read_file(path):
     print(data.read())
 
     data.close()
+    init_menu()
+
+def choose_by_date(path):
+    data = open(path, 'a', encoding='UTF-8')
+
+    print('Enter date')
+    date = input('Enter year ')
+    date += '-' + input('Enter month ')
+    date += '-' + input('Enter day ')
+
+    with open(path) as f:
+        datafile = f.readlines()
+    for line in range(len(datafile)):
+        if date in datafile[line][datafile[line].rfind(';') :]:
+            print(datafile[line])
+        
     init_menu()
 
 def add_into_file(path):
